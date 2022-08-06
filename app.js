@@ -8,6 +8,8 @@ const renderRouter = require('./routes/renderRoutes');
 const userRouter = require('./routes/userRoutes');
 const biodataRouter = require('./routes/biodataRoutes');
 const historyRouter = require('./routes/historyRoutes');
+const globalErrorHandler = require('./controller/errorController');
+const AppError = require('./utils/appError');
 
 const app = express();
 
@@ -36,5 +38,11 @@ app.use('/', renderRouter);
 app.use('/api/user-game', userRouter);
 app.use('/api/user-game-biodata', biodataRouter);
 app.use('/api/user-game-history', historyRouter);
+
+app.use('*', (req, res, next) => {
+    next(new AppError(`This route ${req.originalUrl} not exist in the server`, 404));
+});
+
+app.use(globalErrorHandler);
 
 module.exports = app;
