@@ -1,8 +1,12 @@
 const router = require('express').Router();
 const biodataController = require('../controller/biodataController');
 
-router.route('/').get(biodataController.getBiodatas);
+// prettier-ignore
+router
+    .route('/')
+    .get(biodataController.getBiodatas);
 
+// prettier-ignore
 router
     .route('/:id')
     .patch(biodataController.updateBiodata)

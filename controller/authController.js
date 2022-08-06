@@ -16,6 +16,8 @@ const verifyJWT = (token) => jwt.verify(token, process.env.JWT_SECRET);
 const createSendJWT = (res, data) => {
     const token = signJWT(data._id);
 
+    data.password = undefined;
+
     res.status(200).json({
         status: 'success',
         token,
@@ -55,13 +57,52 @@ exports.signup = catchAsync(async (req, res, next) => {
     response.sendRes(res, fulluser);
 });
 
-// exports.login = catchAsync(async (req, res, next) => {
-//     // Check if password and username exist
+exports.login = catchAsync(async (req, res, next) => {
+    // Check if password and username exist
+    if (!req.body.username || !req.body.password)
+        throw new AppError('Input your username and password');
 
-//     // Check if password and username correct
+    // Find user with username
+    const user = await User.findOne({ username: req.body.username }).select('+password');
 
-//     // Check if user still exist
-// })
+    // Check if password and username correct
+    if (!user || !(await user.checkPassword(req.body.password, user.password)))
+        throw new AppError('Wrong username or password', 404);
+
+    console.log(user, user._id);
+    createSendJWT(res, user);
+});
+
+exports.protect = catchAsync(async (req, res, next) => {
+    // Check if token exist
+    if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer'))
+        throw new AppError('Token does not exist. Please login first!', 404);
+
+    // Verify token
+    const token = req.headers.authorization.split(' ');
+    const decoded = verifyJWT(token[1], process.env.JWT_SECRET);
+
+    // Check if user still exist
+    const user = await User.findById(decoded.id);
+    if (!user)
+        throw new AppError('User belong to the token not exist. Please login again', 401);
+
+    // Check if user password have changed
+    if (user.passwordChanged(decoded.iat))
+        throw new AppError('Password has change. please login again', 401);
+
+    req.user = user;
+    next();
+});
+
+exports.restrictTo =
+    (...allowed) =>
+    (req, res, next) => {
+        if (!allowed.includes(req.user.role))
+            throw new AppError('You have no access to this route', 403);
+
+        next();
+    };
 
 // exports.loginUser = async (req, res) => {
 //     // USER LOGIN INPUT

@@ -31,20 +31,20 @@ exports.createUser = catchAsync(async (req, res, next) => {
     const user = await User.create(userClient);
     if (!user) throw new AppError('Invalid user input', 400);
 
-    const fulluser = await User.findById(user._id).populate('biodata');
+    const fulluser = await User.findById(user._id);
     console.log(fulluser);
     console.log(user._id);
     response.sendRes(res, fulluser);
 });
 
 exports.getUsers = catchAsync(async (req, res, next) => {
-    const Users = await User.find().populate('history biodata');
+    const Users = await User.find();
 
     response.sendResResult(res, Users);
 });
 
 exports.getUser = catchAsync(async (req, res, next) => {
-    const user = await User.findById(req.params.id).populate('history biodata');
+    const user = await User.findById(req.params.id);
     if (!user) throw new AppError('User not found', 404);
 
     response.sendRes(res, user);

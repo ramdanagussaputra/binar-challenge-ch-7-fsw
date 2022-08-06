@@ -11,8 +11,10 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             trim: true,
+            select: false,
             required: [true, 'User must have a password'],
         },
+        passwordChangedAt: Date,
         username: {
             type: String,
             trim: true,
@@ -41,6 +43,21 @@ userSchema.virtual('history', {
     foreignField: 'user',
 });
 
+// DOC METHODS
+// Check password
+userSchema.methods.checkPassword = async (candidatePassword, userPassword) => {
+    return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+// Check have password changed
+userSchema.methods.passwordChanged = function (JWTTimestamp) {
+    if (!this.passwordChangedAt) return false;
+
+    const passwordTimestamp = this.passwordChangedAt.getTime() / 1000;
+
+    return passwordTimestamp > JWTTimestamp;
+};
+
 // DOCUMENT MIDDLEWARE
 // Encrypt password
 userSchema.pre('save', async function (next) {
@@ -49,6 +66,11 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 12);
 
     next();
+});
+
+// QUERY MIDDLEWARE
+userSchema.pre(/^find/, function () {
+    this.populate('biodata history');
 });
 
 const User = mongoose.model('User', userSchema);
