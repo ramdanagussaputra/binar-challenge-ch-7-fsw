@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Challenge Chapter 4 FSW - Ramdan Agus Saputra</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/gameStyle.css" />
+        <link rel="stylesheet" href="css/gameQueries.css" />
+
+        <!-- JavaScript -->
+        <script
+            defer
+            src="https://kit.fontawesome.com/2613e9e9dd.js"
+            crossorigin="anonymous"
+        ></script>
+        <script defer src="js/game.js"></script>
+    </head>
+    <body>
+        <header class="header">
+            <a href="/" class="icon fa-solid fa-angle-left"></a>
+            <i class="icon fa-solid fa-gamepad"></i>
+            <h1 class="title">rock paper scissors</h1>
+        </header>
+
+        <main class="app">
+            <section class="player player--1">
+                <p class="player-text">Player 1</p>
+                <img class="img p1-rock p1" src="img/batu.webp" alt="batu" />
+                <img class="img p1-paper p1" src="img/kertas.webp" alt="kertas" />
+                <img class="img p1-scissor p1" src="img/gunting.webp" alt="gunting" />
+            </section>
+
+            <section class="score-container">
+                <div class="score-header">
+                    <button class="btn-score">Save Score</button>
+                </div>
+                <div class="score">
+                    <p class="score-player">0</p>
+                    <p>-</p>
+                    <p class="score-com">0</p>
+                </div>
+            </section>
+
+            <section class="middle-text">
+                <p class="winner-text">player 1 win</p>
+                <p class="vs-text">VS</p>
+            </section>
+
+            <section class="player player--com">
+                <p class="player-text">com</p>
+                <img class="img com-rock" src="img/batu.webp" alt="batu" />
+                <img class="img com-paper" src="img/kertas.webp" alt="kertas" />
+                <img class="img com-scissor" src="img/gunting.webp" alt="gunting" />
+            </section>
+
+            <img class="img-refresh" src="img/refresh.webp" alt="refresh" />
+        </main>
+    </body>
+</html>
