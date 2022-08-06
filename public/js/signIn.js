@@ -6,16 +6,6 @@ form.addEventListener('submit', async function (e) {
 
     // GET DATA FROM FORM
     const formData = Object.fromEntries(new FormData(form).entries());
-    console.log(formData);
-
-    // ADD GAME HISTORY
-    const user = {
-        ...formData,
-        win: 0,
-        lose: 0,
-        draw: 0,
-        date: Date.now(),
-    };
 
     // SEND DATA TO SERVER
     const response = await fetch('http://localhost:7000/api/user-game', {
@@ -23,7 +13,7 @@ form.addEventListener('submit', async function (e) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(formData),
     });
 
     window.location.reload();

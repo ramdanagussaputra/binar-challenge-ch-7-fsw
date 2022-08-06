@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const userController = require('../controller/userController');
+const historyRouter = require('../routes/historyRoutes');
+
+router.use('/:userId/history', historyRouter);
 
 router.route('/').get(userController.getUsers).post(userController.createUser);
 

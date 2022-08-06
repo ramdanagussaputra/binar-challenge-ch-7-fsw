@@ -1,61 +1,25 @@
 const Biodata = require('../model/biodataModel');
+const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync');
+const response = require('../utils/response');
 
-exports.getBiodatas = async (req, res) => {
-    try {
-        const biodatas = await Biodata.find();
+exports.getBiodatas = catchAsync(async (req, res) => {
+    const biodatas = await Biodata.find();
 
-        res.status(200).json({
-            status: 'success',
-            data: {
-                biodatas,
-            },
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(404).json({
-            status: 'fail',
-            message: 'Data not found',
-        });
-    }
-};
+    response.sendResResult(res, biodatas);
+});
 
-exports.getBiodata = async (req, res) => {
-    try {
-        const biodata = await Biodata.findById(req.params.id);
+exports.getBiodata = catchAsync(async (req, res) => {
+    const biodata = await Biodata.findById(req.params.id);
 
-        res.status(200).json({
-            status: 'success',
-            data: {
-                biodata,
-            },
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(404).json({
-            status: 'fail',
-            message: 'Data not found',
-        });
-    }
-};
+    response.sendRes(res, biodata);
+});
 
-exports.updateBiodata = async (req, res) => {
-    try {
-        const biodata = await Biodata.findByIdAndUpdate(req.params.id, req.body, {
-            new: true,
-            runValidators: true,
-        });
+exports.updateBiodata = catchAsync(async (req, res) => {
+    const biodata = await Biodata.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+    });
 
-        res.status(200).json({
-            status: 'success',
-            data: {
-                biodata,
-            },
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(404).json({
-            status: 'fail',
-            message: 'Data not found',
-        });
-    }
-};
+    response.sendRes(res, biodata);
+});

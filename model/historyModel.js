@@ -17,6 +17,10 @@ const historySchema = new mongoose.Schema({
         type: Date,
         required: [true, 'User game history must have a date'],
     },
+    user: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+    },
 });
 
 const History = mongoose.model('History', historySchema);
