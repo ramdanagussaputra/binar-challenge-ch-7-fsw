@@ -9,15 +9,15 @@ exports.renderGame = function (req, res) {
 };
 
 exports.renderRegister = function (req, res) {
-    res.render('signIn');
+    res.render('signup');
 };
 
 exports.renderUserDashboard = async function (req, res) {
     const response = await axios.get('http://localhost:7000/api/user-game');
 
-    const { users } = response.data.data;
+    const { data } = response.data.data;
 
-    res.render('userDashboard', { users });
+    res.render('userDashboard', { users: data });
 };
 
 exports.renderBiodataDashboard = async function (req, res) {
@@ -26,9 +26,9 @@ exports.renderBiodataDashboard = async function (req, res) {
         `http://localhost:7000/api/user-game-biodata/${req.query.id}`
     );
 
-    const { biodata } = response.data.data;
+    const { data } = response.data.data;
 
-    res.render('biodataDashboard', { biodata });
+    res.render('biodataDashboard', { biodata: data });
 };
 
 exports.renderHistoryDashboard = async function (req, res) {
@@ -37,7 +37,7 @@ exports.renderHistoryDashboard = async function (req, res) {
         `http://localhost:7000/api/user-game-history/${req.query.id}`
     );
 
-    const { history } = response.data.data;
+    const { data } = response.data.data;
 
-    res.render('historyDashboard', { history });
+    res.render('historyDashboard', { history: data });
 };

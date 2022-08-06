@@ -8,7 +8,7 @@ form.addEventListener('submit', async function (e) {
     const formData = Object.fromEntries(new FormData(form).entries());
 
     // SEND DATA TO SERVER
-    const response = await fetch('http://localhost:7000/api/user-game', {
+    const response = await fetch('http://localhost:7000/api/user-game/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -78,7 +78,7 @@ class homeApp {
             this.welcomeMessage.textContent = `Welcome back, ${resServer.data.userData.biodata[0].firstName}`;
 
             // Check if admin
-            if (resServer.data.userData.isAdmin) {
+            if (resServer.data.userData.role === 1) {
                 this.btnDashboard.classList.remove('not-admin');
             }
 
