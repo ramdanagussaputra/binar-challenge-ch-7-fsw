@@ -1,8 +1,9 @@
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const app = require('./app');
+const activateSocket = require('./utils/socket');
 
-process.on('uncaughtException', () => {
+process.on('uncaughtException', (err) => {
     console.error(err.name, err.message);
     console.error(err.stack);
     process.exit(1);
@@ -24,6 +25,8 @@ const port = process.env.PORT || 3000;
 const server = app.listen(port, () =>
     console.log(`Server running on: http://localhost:${port}`)
 );
+
+activateSocket();
 
 process.on('unhandledRejection', (err) => {
     console.error(err.name, err.message);

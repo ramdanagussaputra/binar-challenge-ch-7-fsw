@@ -63,6 +63,7 @@
                 <p class="tab-head">date</p>
                 <p class="tab-head"></p>
 
+                <% histories.forEach(history => { %>
                 <p class="tab-body"><%= history.win %></p>
                 <p class="tab-body"><%= history.lose %></p>
                 <p class="tab-body"><%= history.draw %></p>
@@ -70,6 +71,7 @@
                 <a class="tab-body tab-body--btn">
                     <div class="tab-btn update" data-id="<%= history._id %>">update</div>
                 </a>
+                <% }) %>
             </article>
         </main>
     </body>

@@ -1,5 +1,8 @@
 const router = require('express').Router({ mergeParams: true });
 const historyController = require('../controller/historyController');
+const authController = require('../controller/authController');
+
+// router.use(authController.protect);
 
 router
     .route('/')

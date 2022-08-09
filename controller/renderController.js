@@ -21,7 +21,6 @@ exports.renderUserDashboard = async function (req, res) {
 };
 
 exports.renderBiodataDashboard = async function (req, res) {
-    console.log(req.query.id);
     const response = await axios.get(
         `http://localhost:7000/api/user-game-biodata/${req.query.id}`
     );
@@ -32,12 +31,11 @@ exports.renderBiodataDashboard = async function (req, res) {
 };
 
 exports.renderHistoryDashboard = async function (req, res) {
-    console.log(req.query.id);
     const response = await axios.get(
-        `http://localhost:7000/api/user-game-history/${req.query.id}`
+        `http://localhost:7000/api/user-game/${req.query.id}/history`
     );
 
     const { data } = response.data.data;
 
-    res.render('historyDashboard', { history: data });
+    res.render('historyDashboard', { histories: data });
 };

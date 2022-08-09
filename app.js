@@ -34,10 +34,10 @@ app.use(mongoSanitize());
 
 app.use(xss());
 
-app.use('/', renderRouter);
 app.use('/api/user-game', userRouter);
 app.use('/api/user-game-biodata', biodataRouter);
 app.use('/api/user-game-history', historyRouter);
+app.use('/', renderRouter);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`This route ${req.originalUrl} not exist in the server`, 404));

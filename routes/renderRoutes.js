@@ -1,9 +1,12 @@
 const express = require('express');
-const renderController = require('../controller/renderController.js');
+const renderController = require('../controller/renderController');
+const authController = require('../controller/authController');
 
 const router = express.Router();
 
 router.route('/').get(renderController.renderHomepage);
+
+// router.use(authController.protect);
 
 router.route('/game').get(renderController.renderGame);
 

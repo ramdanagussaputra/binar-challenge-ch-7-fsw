@@ -16,6 +16,14 @@ const verifyJWT = (token) => jwt.verify(token, process.env.JWT_SECRET);
 const createSendJWT = (res, data) => {
     const token = signJWT(data._id);
 
+    const cookiesOps = {
+        expires: new Date(Date.now() + +process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+    };
+
+    if (process.env.NODE_ENV === 'production') cookiesOps.secure = true;
+    res.cookie('jwt', token, cookiesOps);
+
     data.password = undefined;
 
     res.status(200).json({
@@ -87,10 +95,6 @@ exports.protect = catchAsync(async (req, res, next) => {
     if (!user)
         throw new AppError('User belong to the token not exist. Please login again', 401);
 
-    // Check if user password have changed
-    if (user.passwordChanged(decoded.iat))
-        throw new AppError('Password has change. please login again', 401);
-
     req.user = user;
     next();
 });
@@ -103,47 +107,3 @@ exports.restrictTo =
 
         next();
     };
-
-// exports.loginUser = async (req, res) => {
-//     // USER LOGIN INPUT
-//     const { username, password, ok } = req.body;
-
-//     // GET USER DATA FROM DATABASE
-//     const response = await axios.get('http://localhost:7000/api/user-game');
-
-//     const { data } = response.data.data;
-
-//     // CHECK USERNAME AND PASSWORD
-//     let usernameCorrect = false;
-//     let passwordCorrect = false;
-//     let userData;
-
-//     data.forEach((user) => {
-//         if (!(user.password === password && user.username === username)) return;
-
-//         usernameCorrect = true;
-//         passwordCorrect = true;
-//         userData = user;
-//     });
-
-//     if (!usernameCorrect)
-//         return res.status(404).json({
-//             status: 'fail',
-//             message: 'Wrong username',
-//         });
-//     if (!passwordCorrect)
-//         return res.status(404).json({
-//             status: 'fail',
-//             message: 'Wrong password',
-//         });
-
-//     res.status(200).json({
-//         status: 'success',
-//         message: 'successful to login',
-//         data: {
-//             userData,
-//         },
-//     });
-
-//     console.log(`Success, username: ${username}, password: ${password}`, userData);
-// };

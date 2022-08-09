@@ -15,10 +15,12 @@ router
     .route('/login')
     .post(authController.login);
 
+// router.use(authController.protect);
+
 // prettier-ignore
 router
     .route('/')
-    .get(authController.protect, userController.getUsers)
+    .get(userController.getUsers)
     .post(userController.createUser);
 
 // prettier-ignore

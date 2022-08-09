@@ -68,7 +68,15 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
+userSchema.pre('save', function (next) {
+    if (!this.isModified('password') || this.isNew) return next();
+
+    this.passwordChangedAt = Date.now() - 1000;
+    next();
+});
+
 // QUERY MIDDLEWARE
+// Populate biodata and history
 userSchema.pre(/^find/, function () {
     this.populate('biodata history');
 });

@@ -39,8 +39,94 @@ body {
     color: rgb(254, 194, 83);
 }
 
-/* MAIN */
-.app {
+/* ENTER ROOM */
+.enter-room {
+    display: block;
+}
+
+.room-btn-container {
+    max-width: 120rem;
+    padding: 12.8rem 3.2rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 4.8rem;
+}
+
+.btn--room {
+    width: 40%;
+    padding: 3.2rem;
+    background-color: brown;
+    font-size: 3.2rem;
+    color: rgb(254, 194, 83);
+    cursor: pointer;
+}
+
+/* GENERRATE ROOM */
+.generate-room,
+.join-room {
+    display: none;
+    max-width: 120rem;
+    margin: 0 auto;
+}
+
+.generate-room-container,
+.join-room-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3.2rem;
+}
+
+.generate-heading,
+.join-heading {
+    font-size: 5.2rem;
+    color: rgb(254, 194, 83);
+    padding: 3.2rem 0;
+}
+
+.generate-form,
+.join-form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.generate-input,
+.join-input {
+    padding: 1.6rem 2.4rem;
+    font-size: 2rem;
+    width: 30%;
+    margin: 0;
+}
+
+.btn--create-room,
+.btn--join-room {
+    width: 10%;
+    font-size: 2rem;
+    background-color: brown;
+    color: rgb(254, 194, 83);
+    cursor: pointer;
+}
+
+.btn--cancel {
+    padding: 2.4rem 4.8rem;
+    font-size: 2rem;
+    background-color: brown;
+    color: rgb(254, 194, 83);
+    cursor: pointer;
+}
+
+/* GAME */
+.game {
+    display: none;
+    padding: 9.6rem 0;
+}
+
+.game-container {
     max-width: 90rem;
     padding: 0 3.2rem;
     margin: 0 auto;
